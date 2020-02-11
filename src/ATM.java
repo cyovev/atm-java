@@ -111,4 +111,17 @@ public class ATM {
              this.banknotes.put(billValue, (amountInAtm - withdrawnAmount));
         }
     }
+
+    ///////////////////////////////////////////////////////
+    // to check whether there's printer in ink in the printer
+    public boolean isPrinterInOrder() throws PrinterError {
+        boolean error = false;
+        // TODO: call method to check for errors
+
+        if (error) {        
+            throw new PrinterError(">>> There's an error with the printer.");
+        }
+
+        return true;
+    }
 }

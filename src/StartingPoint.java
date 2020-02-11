@@ -131,7 +131,7 @@ public class StartingPoint {
                     break;
                     
                 case 2:
-                    printBalanceAction(card);
+                    printBalanceAction(bankomat, card);
                     break;
                     
                 case 3:
@@ -193,7 +193,7 @@ public class StartingPoint {
                 System.out.println(">>> Take your money: " + cash);
                 
                 // print balance and eject the card
-                printBalanceAction(card);
+                printBalanceAction(atm, card);
             }
         }
         
@@ -218,10 +218,24 @@ public class StartingPoint {
     }
     
     ///////////////////////////////////////////////////////
-    private static void printBalanceAction(Card card) throws CardNotInserted {
-        double balance = card.getBalance();
-        System.out.println(String.format(">>> Current balance: %1.2f", balance));
-        ejectCardAction(card);
+    private static void printBalanceAction(ATM atm, Card card) throws CardNotInserted {
+        // try to print a receipt if there's paper and ink in the printer
+        try {
+            if (atm.isPrinterInOrder()) {
+                double balance = card.getBalance();
+                System.out.println(String.format(">>> Current balance: %1.2f", balance));
+            }
+        }
+
+        // if not, notify the user
+        catch (PrinterError e) {
+            System.out.println(e.getMessage());
+        }
+
+        // in the end, eject the card
+        finally {
+            ejectCardAction(card);
+        }
     }
     
     ///////////////////////////////////////////////////////

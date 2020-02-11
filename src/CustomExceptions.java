@@ -11,6 +11,12 @@ class InvalidRequestedAmount extends Exception {
     }
 }
 
+class PrinterError extends Exception {
+    PrinterError(String s){
+        super(s);
+    }
+}
+
 /////////////////////// CARD RELATED \\\\\\\\\\\\\\\\\\\\\\\\
 class CardIsBlocked extends Exception {
     CardIsBlocked(String s){
