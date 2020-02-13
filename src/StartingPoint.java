@@ -1,8 +1,6 @@
 import java.io.*;
-import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Scanner;
 import java.util.TreeMap;
 
@@ -243,12 +241,18 @@ public class StartingPoint {
     // allow to user to choose another action
     // otherwise eject the card
     private static void changePINAction(ATM atm, Card card) throws CardNotInserted {
-        if (card.changePIN()) {
-            System.out.println(">>> Your PIN was updated successfully!");
-            chooseAction(atm, card);
+        try {
+            if (card.changePIN()) {
+                System.out.println(">>> Your PIN was updated successfully!");
+                chooseAction(atm, card);
+            }
+            else {
+                ejectCardAction(card);
+            }
         }
-        else {
-            ejectCardAction(card);
+        catch (SamePINOnChange e) {
+            System.out.println(e.getMessage());
+            changePINAction(atm, card);
         }
     }
     

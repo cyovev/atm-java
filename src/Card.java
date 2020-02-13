@@ -132,7 +132,7 @@ public class Card {
     // which cannot be surpassed in a single withdrawal
     public void checkTransactionLimit(int requestedAmount) throws ExceededTransactionLimit {
         if (requestedAmount > this.maxWithdrawAmount) {
-            throw new ExceededTransactionLimit("You cannot withdraw more than " + this.maxWithdrawAmount + "HRK");
+            throw new ExceededTransactionLimit(">>> You cannot withdraw more than " + this.maxWithdrawAmount + "HRK");
         }
     }
     
@@ -146,7 +146,7 @@ public class Card {
     }
     
     ///////////////////////////////////////////////////////
-    public boolean changePIN() throws CardNotInserted {
+    public boolean changePIN() throws CardNotInserted, SamePINOnChange {
         checkIfCardIsInserted(); // makes sure the card is inserted
         String newPIN;
         
@@ -161,6 +161,11 @@ public class Card {
         // if the user entered 0, the change was not successful
         if ("0".equals(newPIN)) {
             return false;
+        }
+
+        // if new pin same as old
+        else if (newPIN.equals(this.PIN)) {
+            throw new SamePINOnChange(">>> New PIN cannot be the same as old PIN.");
         }
         
         // otherwise change the PIN, notify the user and return true

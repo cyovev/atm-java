@@ -47,3 +47,9 @@ class NotEnoughFunds extends Exception {
         super(s);
     }
 }
+
+class SamePINOnChange extends Exception {
+    SamePINOnChange(String s){
+        super(s);
+    }
+}
